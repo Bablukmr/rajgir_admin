@@ -236,10 +236,10 @@ const IntegratedSafari = () => {
 			{/* Time Slots */}
 			<div className="mb-4">
 				<label className="block text-sm font-medium">Time Slots</label>
-				<div className="grid sm:grid-cols-4 gap-2 mt-1">
+				<div className="grid  sm:grid-cols-4 gap-2 mt-1">
 					<input
 						type="time"
-						className="border rounded-lg p-2"
+						className="border rounded-lg p-2 "
 						value={currentSlot.from}
 						onChange={(e) =>
 							setCurrentSlot({ ...currentSlot, from: e.target.value })
@@ -303,7 +303,10 @@ const IntegratedSafari = () => {
 						onChange={(e) => setQuotaType(e.target.value)}
 					>
 						<option value="Online">Online</option>
-						<option value="Offline">Offline</option>
+						<option value="Offline 1">Counter 1</option>
+						<option value="Offline 2">Counter 2</option>
+						<option value="Counter 3">Counter 3</option>
+						<option value="Counter 4">Counter 4</option>
 					</select>
 					<input
 						type="number"
