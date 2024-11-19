@@ -14,7 +14,6 @@ const IntegratedSafari = () => {
   const [quotaType, setQuotaType] = useState("Online");
   const [quotaSeats, setQuotaSeats] = useState(0);
   const [quotaList, setQuotaList] = useState([]);
-  const [preview, setPreview] = useState(null);
   const [submittedEntries, setSubmittedEntries] = useState([]);
 
   // Load from local storage
@@ -77,12 +76,14 @@ const IntegratedSafari = () => {
       quotaList,
     };
 
-    setPreview(data);
-  };
+    setSubmittedEntries([...submittedEntries, data]);
 
-  const confirmSubmission = () => {
-    setSubmittedEntries([...submittedEntries, preview]);
-    setPreview(null);
+    // Reset form fields
+    setPackageName("");
+    setAttractions([]);
+    setFacilities([]);
+    setTimeSlots([]);
+    setQuotaList([]);
     toast.success("Package submitted successfully!");
   };
 
@@ -228,28 +229,15 @@ const IntegratedSafari = () => {
         </ul>
       </div>
 
-      {/* Preview */}
+      {/* Submit */}
       <div className="mt-4">
         <button
           className="px-6 py-2 bg-blue-500 text-white rounded-lg"
           onClick={handleSubmit}
         >
-          Preview
+          Submit
         </button>
       </div>
-
-      {preview && (
-        <div className="mt-6 bg-gray-100 p-4 rounded-lg">
-          <h3 className="font-bold text-lg mb-2">Preview</h3>
-          <pre className="text-sm">{JSON.stringify(preview, null, 2)}</pre>
-          <button
-            className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg"
-            onClick={confirmSubmission}
-          >
-            Confirm Submission
-          </button>
-        </div>
-      )}
 
       {/* Submitted Entries */}
       <div className="mt-6">
@@ -262,15 +250,15 @@ const IntegratedSafari = () => {
               <div>Facilities: {entry.facilities.join(", ")}</div>
               <div>
                 Time Slots:{" "}
-                {entry.timeSlots.map(
-                  (slot) => `${slot.from}-${slot.to} (${slot.seats} seats)`
-                ).join(", ")}
+                {entry.timeSlots
+                  .map((slot) => `${slot.from}-${slot.to} (${slot.seats} seats)`)
+                  .join(", ")}
               </div>
               <div>
                 Quotas:{" "}
-                {entry.quotaList.map(
-                  (quota) => `${quota.type} (${quota.seats} seats)`
-                ).join(", ")}
+                {entry.quotaList
+                  .map((quota) => `${quota.type} (${quota.seats} seats)`)
+                  .join(", ")}
               </div>
             </li>
           ))}
