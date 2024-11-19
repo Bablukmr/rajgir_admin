@@ -20,6 +20,7 @@ import IntegratedSafari from './pages/IntegratedSafari';
 import Package from './pages/Package';
 import Activity from './pages/Activity';
 import Timeslots from './pages/Timeslots';
+import UserList from './pages/UserList';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -71,6 +72,15 @@ function App() {
             <>
               <PageTitle title="Profile | Rajgir Zoo & Nature " />
               <Profile />
+            </>
+          }
+        />
+        <Route
+          path="/auth/list"
+          element={
+            <>
+              <PageTitle title="User List | Rajgir Zoo & Nature " />
+              <UserList />
             </>
           }
         />
