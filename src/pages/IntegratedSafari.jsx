@@ -233,65 +233,72 @@ const IntegratedSafari = () => {
 				</div>
 			</div>
 
-			{/* Time Slots */}
-			<div className="mb-4">
-				<label className="block text-sm font-medium">Time Slots</label>
-				<div className="grid  sm:grid-cols-4 gap-2 mt-1">
-					<input
-						type="time"
-						className="border rounded-lg p-2 "
-						value={currentSlot.from}
-						onChange={(e) =>
-							setCurrentSlot({ ...currentSlot, from: e.target.value })
-						}
-					/>
-					<input
-						type="time"
-						className="border rounded-lg p-2"
-						value={currentSlot.to}
-						onChange={(e) =>
-							setCurrentSlot({ ...currentSlot, to: e.target.value })
-						}
-					/>
-					<div>
-						<label className="text-sm">Seats</label>
-						<input
-							type="number"
-							className="border rounded-lg p-2 w-full mt-1"
-							placeholder="Seats"
-							value={currentSlot.seats}
-							onChange={(e) =>
-								setCurrentSlot({
-									...currentSlot,
-									seats: parseInt(e.target.value) || 0,
-								})
-							}
-						/>
-					</div>
-					<button
-						className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center gap-1"
-						onClick={addTimeSlot}
-					>
-						<FiPlus /> Add
-					</button>
-				</div>
-				<div className="mt-2 flex gap-2 flex-wrap">
-					{timeSlots.map((slot, index) => (
-						<span
-							key={index}
-							className="px-3 py-1 bg-gray-200 rounded-lg text-sm flex items-center gap-1"
-						>
-							{slot.from} - {slot.to} ({slot.seats} seats){' '}
-							<AiFillDelete
-								className="text-red-500 cursor-pointer"
-								onClick={() =>
-									setTimeSlots(timeSlots.filter((_, i) => i !== index))
-								}
-							/>
-						</span>
-					))}
-				</div>
-			</div>
+		{/* Time Slots */}
+<div className="mb-4">
+	<label className="block text-sm font-medium mb-2">Time Slots</label>
+	<div className="grid sm:grid-cols-4 gap-2 items-center">
+		<div className="flex flex-col">
+			<label className="text-sm mb-1">From</label>
+			<input
+				type="time"
+				className="border rounded-lg p-2"
+				value={currentSlot.from}
+				onChange={(e) =>
+					setCurrentSlot({ ...currentSlot, from: e.target.value })
+				}
+			/>
+		</div>
+		<div className="flex flex-col">
+			<label className="text-sm mb-1">To</label>
+			<input
+				type="time"
+				className="border rounded-lg p-2"
+				value={currentSlot.to}
+				onChange={(e) =>
+					setCurrentSlot({ ...currentSlot, to: e.target.value })
+				}
+			/>
+		</div>
+		<div className="flex flex-col">
+			<label className="text-sm mb-1">Seats</label>
+			<input
+				type="number"
+				className="border rounded-lg p-2"
+				placeholder="Seats"
+				value={currentSlot.seats}
+				onChange={(e) =>
+					setCurrentSlot({
+						...currentSlot,
+						seats: parseInt(e.target.value) || 0,
+					})
+				}
+			/>
+		</div>
+		<button
+			className="h-full px-4 py-2 bg-green-500 text-white rounded-lg flex items-center justify-center gap-1"
+			onClick={addTimeSlot}
+		>
+			<FiPlus /> Add
+		</button>
+	</div>
+	<div className="mt-2 flex gap-2 flex-wrap">
+		{timeSlots.map((slot, index) => (
+			<span
+				key={index}
+				className="px-3 py-1 bg-gray-200 rounded-lg text-sm flex items-center gap-1"
+			>
+				{slot.from} - {slot.to} ({slot.seats} seats){' '}
+				<AiFillDelete
+					className="text-red-500 cursor-pointer"
+					onClick={() =>
+						setTimeSlots(timeSlots.filter((_, i) => i !== index))
+					}
+				/>
+			</span>
+		))}
+	</div>
+</div>
+
 
 			{/* Quota */}
 			<div className="mb-4">
