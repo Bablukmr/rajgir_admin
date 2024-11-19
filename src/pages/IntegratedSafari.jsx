@@ -125,7 +125,7 @@ const IntegratedSafari = () => {
 
   return (
     <div className="p-6 mx-auto bg-gray-50 shadow rounded-lg ">
-      <h2 className="text-2xl font-bold mb-4">Integrated Safari Master Form</h2>
+      <h2 className="text-2xl font-bold mb-4">Package Management Form</h2>
 
       {/* Package Name */}
       <div className="mb-4">

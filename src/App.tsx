@@ -129,6 +129,15 @@ function App() {
           }
         />
         <Route
+          path="/package-detail"
+          element={
+            <>
+              <PageTitle title="Settings | Rajgir Zoo & Nature " />
+              <Timeslots />
+            </>
+          }
+        />
+        <Route
           path="/forms/package"
           element={
             <>
