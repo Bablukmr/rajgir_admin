@@ -17,7 +17,7 @@ const brandData: BRAND[] = [
   },
   {
     logo: BrandFour,
-    name: 'Coounter 1',
+    name: 'Counter 1',
     visitors: 2.2,
     revenues: '4,635',
     sales: 467,
@@ -25,7 +25,7 @@ const brandData: BRAND[] = [
   },
   {
     logo: BrandFour,
-    name: 'Coounter 2',
+    name: 'Counter 2',
     visitors: 2.1,
     revenues: '4,290',
     sales: 420,
@@ -33,7 +33,7 @@ const brandData: BRAND[] = [
   },
   {
     logo: BrandFive,
-    name: 'Coounter 3',
+    name: 'Counter 3',
     visitors: 1.5,
     revenues: '3,580',
     sales: 389,
@@ -41,7 +41,7 @@ const brandData: BRAND[] = [
   },
   {
     logo: BrandFour,
-    name: 'Coounter 4',
+    name: 'Counter 4',
     visitors: 3.5,
     revenues: '6,768',
     sales: 390,
