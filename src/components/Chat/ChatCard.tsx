@@ -18,7 +18,7 @@ const chatData: Chat[] = [
 	},
 	{
 		avatar: UserFive,
-		name: 'InActive',
+		name: 'Anshu',
 		text: 'Logout',
 		time: 12,
 		textCount: 2,

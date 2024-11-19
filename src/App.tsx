@@ -17,6 +17,9 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import IntegratedSafari from './pages/IntegratedSafari';
+import Package from './pages/Package';
+import Activity from './pages/Activity';
+import Timeslots from './pages/Timeslots';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -108,7 +111,34 @@ function App() {
           }
         />
         <Route
-          path="/chart"
+          path="/forms/activity"
+          element={
+            <>
+              <PageTitle title="Settings | Rajgir Zoo & Nature " />
+              <Activity />
+            </>
+          }
+        />
+        <Route
+          path="/forms/timeslot"
+          element={
+            <>
+              <PageTitle title="Settings | Rajgir Zoo & Nature " />
+              <Timeslots />
+            </>
+          }
+        />
+        <Route
+          path="/forms/package"
+          element={
+            <>
+              <PageTitle title="Settings | Rajgir Zoo & Nature " />
+              <Package />
+            </>
+          }
+        />
+        <Route
+          path="/forms/chart"
           element={
             <>
               <PageTitle title="Basic Chart | Rajgir Zoo & Nature " />

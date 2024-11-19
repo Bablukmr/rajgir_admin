@@ -7,8 +7,8 @@ const IntegratedSafari = () => {
 	const [packageName, setPackageName] = useState('');
 	const [attractions, setAttractions] = useState([]);
 	const [facilities, setFacilities] = useState([]);
-	const [currentAttraction, setCurrentAttraction] = useState('');
-	const [currentFacility, setCurrentFacility] = useState('');
+	const [currentAttraction, setCurrentAttraction] = useState({ name: '', price: '' });
+	const [currentFacility, setCurrentFacility] = useState({ name: '', price: '' });
 	const [timeSlots, setTimeSlots] = useState([]);
 	const [currentSlot, setCurrentSlot] = useState({
 		from: '',
@@ -34,16 +34,20 @@ const IntegratedSafari = () => {
 
 	// Add attraction or facility
 	const addAttraction = () => {
-		if (currentAttraction) {
+		if (currentAttraction.name && currentAttraction.price) {
 			setAttractions([...attractions, currentAttraction]);
-			setCurrentAttraction('');
+			setCurrentAttraction({ name: '', price: '' });
+		} else {
+			toast.error('Please fill both fields for attractions!');
 		}
 	};
 
 	const addFacility = () => {
-		if (currentFacility) {
+		if (currentFacility.name && currentFacility.price) {
 			setFacilities([...facilities, currentFacility]);
-			setCurrentFacility('');
+			setCurrentFacility({ name: '', price: '' });
+		} else {
+			toast.error('Please fill both fields for facilities!');
 		}
 	};
 
@@ -114,8 +118,8 @@ const IntegratedSafari = () => {
 	};
 
 	return (
-		<div className="p-6 mx-auto bg-gray-50 shadow rounded-lg">
-			<h2 className="text-2xl font-bold mb-4">Integrated Safari Admin Form</h2>
+		<div className="p-6 mx-auto bg-gray-50 shadow rounded-lg max-w-3xl">
+			<h2 className="text-2xl font-bold mb-4">Integrated Safari Master Form</h2>
 
 			{/* Package Name */}
 			<div className="mb-4">
@@ -132,13 +136,27 @@ const IntegratedSafari = () => {
 			{/* Attractions */}
 			<div className="mb-4">
 				<label className="block text-sm font-medium">Attractions</label>
-				<div className="flex gap-2 mt-1">
+				<div className="grid sm:grid-cols-3 gap-2 mt-1">
 					<input
 						type="text"
-						className="flex-grow border rounded-lg p-2"
-						placeholder="Enter attraction"
-						value={currentAttraction}
-						onChange={(e) => setCurrentAttraction(e.target.value)}
+						className="border rounded-lg p-2"
+						placeholder="Attraction Name"
+						value={currentAttraction.name}
+						onChange={(e) =>
+							setCurrentAttraction({ ...currentAttraction, name: e.target.value })
+						}
+					/>
+					<input
+						type="number"
+						className="border rounded-lg p-2"
+						placeholder="Price"
+						value={currentAttraction.price}
+						onChange={(e) =>
+							setCurrentAttraction({
+								...currentAttraction,
+								price: parseFloat(e.target.value) || '',
+							})
+						}
 					/>
 					<button
 						className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center gap-1"
@@ -153,7 +171,7 @@ const IntegratedSafari = () => {
 							key={index}
 							className="px-3 py-1 bg-gray-200 rounded-lg text-sm flex items-center gap-1"
 						>
-							{attraction}{' '}
+							{attraction.name} (₹{attraction.price}){' '}
 							<AiFillDelete
 								className="text-red-500 cursor-pointer"
 								onClick={() =>
@@ -168,13 +186,27 @@ const IntegratedSafari = () => {
 			{/* Facilities */}
 			<div className="mb-4">
 				<label className="block text-sm font-medium">Facilities</label>
-				<div className="flex gap-2 mt-1">
+				<div className="grid sm:grid-cols-3 gap-2 mt-1">
 					<input
 						type="text"
-						className="flex-grow border rounded-lg p-2"
-						placeholder="Enter facility"
-						value={currentFacility}
-						onChange={(e) => setCurrentFacility(e.target.value)}
+						className="border rounded-lg p-2"
+						placeholder="Facility Name"
+						value={currentFacility.name}
+						onChange={(e) =>
+							setCurrentFacility({ ...currentFacility, name: e.target.value })
+						}
+					/>
+					<input
+						type="number"
+						className="border rounded-lg p-2"
+						placeholder="Price"
+						value={currentFacility.price}
+						onChange={(e) =>
+							setCurrentFacility({
+								...currentFacility,
+								price: parseFloat(e.target.value) || '',
+							})
+						}
 					/>
 					<button
 						className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center gap-1"
@@ -189,7 +221,7 @@ const IntegratedSafari = () => {
 							key={index}
 							className="px-3 py-1 bg-gray-200 rounded-lg text-sm flex items-center gap-1"
 						>
-							{facility}{' '}
+							{facility.name} (₹{facility.price}){' '}
 							<AiFillDelete
 								className="text-red-500 cursor-pointer"
 								onClick={() =>
@@ -204,7 +236,7 @@ const IntegratedSafari = () => {
 			{/* Time Slots */}
 			<div className="mb-4">
 				<label className="block text-sm font-medium">Time Slots</label>
-				<div className="flex gap-2 mt-1">
+				<div className="grid sm:grid-cols-4 gap-2 mt-1">
 					<input
 						type="time"
 						className="border rounded-lg p-2"
@@ -221,46 +253,57 @@ const IntegratedSafari = () => {
 							setCurrentSlot({ ...currentSlot, to: e.target.value })
 						}
 					/>
-					<input
-						type="number"
-						className="border rounded-lg p-2"
-						placeholder="Seats"
-						value={currentSlot.seats}
-						onChange={(e) =>
-							setCurrentSlot({
-								...currentSlot,
-								seats: parseInt(e.target.value),
-							})
-						}
-					/>
+					<div>
+						<label className="text-sm">Seats</label>
+						<input
+							type="number"
+							className="border rounded-lg p-2 w-full mt-1"
+							placeholder="Seats"
+							value={currentSlot.seats}
+							onChange={(e) =>
+								setCurrentSlot({
+									...currentSlot,
+									seats: parseInt(e.target.value) || 0,
+								})
+							}
+						/>
+					</div>
 					<button
-						className="px-4 py-2 bg-green-500 text-white rounded-lg"
+						className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center gap-1"
 						onClick={addTimeSlot}
 					>
-						Add
+						<FiPlus /> Add
 					</button>
 				</div>
-				<ul className="mt-2">
+				<div className="mt-2 flex gap-2 flex-wrap">
 					{timeSlots.map((slot, index) => (
-						<li key={index} className="text-sm">
-							{slot.from} - {slot.to} ({slot.seats} seats)
-						</li>
+						<span
+							key={index}
+							className="px-3 py-1 bg-gray-200 rounded-lg text-sm flex items-center gap-1"
+						>
+							{slot.from} - {slot.to} ({slot.seats} seats){' '}
+							<AiFillDelete
+								className="text-red-500 cursor-pointer"
+								onClick={() =>
+									setTimeSlots(timeSlots.filter((_, i) => i !== index))
+								}
+							/>
+						</span>
 					))}
-				</ul>
+				</div>
 			</div>
-			{/* Quota Distribution */}
+
+			{/* Quota */}
 			<div className="mb-4">
 				<label className="block text-sm font-medium">Quota Distribution</label>
-				<div className="flex gap-2 mt-1">
+				<div className="grid sm:grid-cols-3 gap-2 mt-1">
 					<select
 						className="border rounded-lg p-2"
 						value={quotaType}
 						onChange={(e) => setQuotaType(e.target.value)}
 					>
-						<option>Online</option>
-						<option>Counter1</option>
-						<option>Counter2</option>
-						<option>Counter3</option>
+						<option value="Online">Online</option>
+						<option value="Offline">Offline</option>
 					</select>
 					<input
 						type="number"
@@ -270,66 +313,97 @@ const IntegratedSafari = () => {
 						onChange={(e) => setQuotaSeats(parseInt(e.target.value) || 0)}
 					/>
 					<button
-						className="px-4 py-2 bg-green-500 text-white rounded-lg"
+						className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center gap-1"
 						onClick={addQuota}
 					>
-						Add
+						<FiPlus /> Add
 					</button>
 				</div>
-				<ul className="mt-2">
+				<div className="mt-2 flex gap-2 flex-wrap">
 					{quotaList.map((quota, index) => (
-						<li
+						<span
 							key={index}
-							className="text-sm flex justify-between items-center"
+							className="px-3 py-1 bg-gray-200 rounded-lg text-sm flex items-center gap-1"
 						>
-							{quota.type} - {quota.seats} seats
+							{quota.type}: {quota.seats}{' '}
 							<AiFillDelete
 								className="text-red-500 cursor-pointer"
 								onClick={() =>
 									setQuotaList(quotaList.filter((_, i) => i !== index))
 								}
 							/>
-						</li>
+						</span>
 					))}
-				</ul>
+				</div>
 			</div>
 
 			{/* Submit */}
-			<div className="mt-4">
-				<button
-					className="px-6 py-2 bg-blue-500 text-white rounded-lg"
-					onClick={handleSubmit}
-				>
-					Submit
-				</button>
-			</div>
+			<button
+				className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg font-medium"
+				onClick={handleSubmit}
+			>
+				Submit Package
+			</button>
 
 			{/* Submitted Entries */}
 			<div className="mt-6">
-				<h3 className="font-bold text-lg mb-2">Submitted Entries</h3>
-				<ul className="text-sm">
-					{submittedEntries.map((entry, index) => (
-						<li key={index} className="mb-2 p-2 border rounded-lg">
-							<strong>{entry.packageName}</strong>
-							<div>Attractions: {entry.attractions.join(', ')}</div>
-							<div>Facilities: {entry.facilities.join(', ')}</div>
-							<div>
-								Time Slots:{' '}
-								{entry.timeSlots
-									.map(
-										(slot) => `${slot.from}-${slot.to} (${slot.seats} seats)`,
-									)
-									.join(', ')}
-							</div>
-							<div>
-								Quotas:{' '}
-								{entry.quotaList
-									.map((quota) => `${quota.type} (${quota.seats} seats)`)
-									.join(', ')}
-							</div>
-						</li>
-					))}
-				</ul>
+				<h3 className="text-lg font-semibold">Submitted Entries</h3>
+				<div className="overflow-x-auto">
+					<table className="w-full mt-2 border">
+						<thead>
+							<tr className="bg-gray-200">
+								<th className="border px-4 py-2">Package</th>
+								<th className="border px-4 py-2">Attractions</th>
+								<th className="border px-4 py-2">Facilities</th>
+								<th className="border px-4 py-2">Time Slots</th>
+								<th className="border px-4 py-2">Quota</th>
+							</tr>
+						</thead>
+						<tbody>
+							{submittedEntries.map((entry, index) => (
+								<tr key={index}>
+									<td className="border px-4 py-2">{entry.packageName}</td>
+									<td className="border px-4 py-2">
+										<ul>
+											{entry.attractions.map((attraction, i) => (
+												<li key={i}>
+													{attraction.name} (₹{attraction.price})
+												</li>
+											))}
+										</ul>
+									</td>
+									<td className="border px-4 py-2">
+										<ul>
+											{entry.facilities.map((facility, i) => (
+												<li key={i}>
+													{facility.name} (₹{facility.price})
+												</li>
+											))}
+										</ul>
+									</td>
+									<td className="border px-4 py-2">
+										<ul>
+											{entry.timeSlots.map((slot, i) => (
+												<li key={i}>
+													{slot.from} - {slot.to} ({slot.seats} seats)
+												</li>
+											))}
+										</ul>
+									</td>
+									<td className="border px-4 py-2">
+										<ul>
+											{entry.quotaList.map((quota, i) => (
+												<li key={i}>
+													{quota.type}: {quota.seats}
+												</li>
+											))}
+										</ul>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	);
